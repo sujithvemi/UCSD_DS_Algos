@@ -3,7 +3,17 @@ import sys
 
 def optimal_summands(n):
     summands = []
-    #write your code here
+    prizes = 1
+    sum_value = prizes
+    summands.append(prizes)
+    while sum_value < n:
+        prizes += 1
+        if sum_value + prizes > n:
+            summands[-1] += n - sum_value
+            sum_value = n
+        else:
+            summands.append(prizes)
+            sum_value += prizes
     return summands
 
 if __name__ == '__main__':
