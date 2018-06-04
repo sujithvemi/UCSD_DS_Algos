@@ -1,12 +1,13 @@
 #Uses python3
-
 import sys
+import operator
 
 def max_dot_product(a, b):
-    #write your code here
     res = 0
-    for i in range(len(a)):
-        res += a[i] * b[i]
+    a_sort = sorted(a, reverse=True)
+    b_sort = sorted(b, reverse=True)
+    multiply = lambda a,b: map(operator.mul, a, b)
+    res = sum(multiply(a_sort, b_sort))
     return res
 
 if __name__ == '__main__':

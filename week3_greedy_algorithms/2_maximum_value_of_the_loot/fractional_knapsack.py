@@ -3,8 +3,13 @@ import sys
 
 def get_optimal_value(capacity, weights, values):
     value = 0.
-    # write your code here
-
+    unit_val = [v/w for v,w in zip(values, weights)]
+    v_sort = [x for _,x in sorted(zip(unit_val, values), reverse=True)]
+    w_sort = [x for _,x in sorted(zip(unit_val, weights), reverse=True)]
+    for i in range(len(weights)):
+        more_loot = min(capacity, w_sort[i])
+        value += more_loot * (v_sort[i]/w_sort[i])
+        capacity -= more_loot
     return value
 
 
