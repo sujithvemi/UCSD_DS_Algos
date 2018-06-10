@@ -6,7 +6,6 @@ def partition3(a, l, r):
     x = a[l]
     j = k = l
     for i in range(l+1, r+1):
-        # print(a)
         if a[i] < x:
             j += 1
             k += 1
@@ -15,7 +14,6 @@ def partition3(a, l, r):
         elif a[i] == x:
             k += 1
             a[k], a[i] = a[i], a[k]
-    print(j, k)
     a[l], a[j] = a[j], a[l]
     return j, k
 
@@ -34,11 +32,8 @@ def randomized_quick_sort(a, l, r):
     if l >= r:
         return
     k = random.randint(l, r)
-    print(k)
     a[l], a[k] = a[k], a[l]
     m1, m2 = partition3(a, l, r)
-    # print(a)
-    # print(m1, m2)
     randomized_quick_sort(a, l, m1 - 1)
     randomized_quick_sort(a, m2 + 1, r)
 
