@@ -16,17 +16,23 @@ class Bracket:
             return True
         return False
 
-if __name__ == "__main__":
-    text = sys.stdin.read()
-
+def match_brackets(text):
     opening_brackets_stack = []
     for i, next in enumerate(text):
         if next == '(' or next == '[' or next == '{':
-            # Process opening bracket, write your code here
-            pass
+            opening_brackets_stack.append(Bracket(next, i + 1))
 
         if next == ')' or next == ']' or next == '}':
-            # Process closing bracket, write your code here
-            pass
+            open_bracket = opening_brackets_stack.pop()
+            if (open_bracket.Match(next)):
+                continue
+            else:
+                return i + 1
+    if opening_brackets_stack:
+        return opening_brackets_stack[0].position
+    else:
+        return "Success"
 
-    # Printing answer, write your code here
+if __name__ == "__main__":
+    text = sys.stdin.read()
+    print(match_brackets(text))
