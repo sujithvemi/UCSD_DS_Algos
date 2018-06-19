@@ -23,7 +23,10 @@ def match_brackets(text):
             opening_brackets_stack.append(Bracket(next, i + 1))
 
         if next == ')' or next == ']' or next == '}':
-            open_bracket = opening_brackets_stack.pop()
+            if opening_brackets_stack:
+                open_bracket = opening_brackets_stack.pop()
+            else:
+                return i + 1
             if (open_bracket.Match(next)):
                 continue
             else:
