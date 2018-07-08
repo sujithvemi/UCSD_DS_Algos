@@ -43,7 +43,7 @@ class HeapBuilder:
 			return
 
 	def GenerateSwaps(self):
-		for i in reversed(range(math.floor((self.n-1)/2))):
+		for i in reversed(range(math.ceil((self.n-1)/2))):
 			self.sift_down(i)
 
 	def Solve(self):
