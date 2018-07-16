@@ -24,7 +24,9 @@ def Explore(adj, i, visited, *args):
 def dfs(adj):
     visited = [False for _ in range(n)]
     post_order = []
-    Explore(adj, 0, visited, post_order)
+    for v in range(n):
+        if not visited[v]:
+            Explore(adj, v, visited, post_order)
     return post_order
 
 def number_of_strongly_connected_components(adj):
