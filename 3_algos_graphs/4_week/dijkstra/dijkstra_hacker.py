@@ -19,6 +19,7 @@ class make_queue:
     def append(self, node):
         self.size += 1
         self.min_heap.append(node)
+        self.pos_array
         self.pos_array.append(self.size)
 
     def left_child(self, i):
@@ -52,7 +53,6 @@ class make_queue:
             self.pos_array[self.min_heap[i].num] = min_id
             self.pos_array[self.min_heap[min_id].num] = i
             self.min_heap[min_id], self.min_heap[i] = self.min_heap[i], self.min_heap[min_id]
-            self.sift_down(min_id)
         else:
             return
 
@@ -75,7 +75,7 @@ class make_queue:
         else:
             self.sift_down(pos)
 
-def distance(adj, cost, s, t):
+def distance(adj, cost, s):
     dist = [float("inf") for _ in range(n)]
     prev = [None for _ in range(n)]
     v_queue = make_queue()
@@ -89,27 +89,36 @@ def distance(adj, cost, s, t):
         u = v_queue.extract_min()
         visited[u.num] = True
         for v, w in zip(adj[u.num], cost[u.num]):
-            if visited[v] == True:
-                continue
-            else:
-                if dist_vals[v] > dist_vals[u.num] + w:
-                    dist_vals[v] = dist_vals[u.num] + w
-                    prev[v] = u.num
-                    v_queue.change_priority(v, dist_vals[v])
-    return -1 if math.isinf(dist_vals[t]) else dist_vals[t]
-
+            if dist_vals[v] > dist_vals[u.num] + w:
+                dist_vals[v] = dist_vals[u.num] + w
+                prev[v] = u.num
+                v_queue.change_priority(v, dist_vals[v])
+    del dist_vals[s]
+    return [-1 if math.isinf(u) else u for u in dist_vals]
 
 if __name__ == '__main__':
-    input = sys.stdin.read()
-    data = list(map(int, input.split()))
-    n, m = data[0:2]
-    data = data[2:]
-    edges = list(zip(zip(data[0:(3 * m):3], data[1:(3 * m):3]), data[2:(3 * m):3]))
-    data = data[3 * m:]
-    adj = [[] for _ in range(n)]
-    cost = [[] for _ in range(n)]
-    for ((a, b), w) in edges:
-        adj[a - 1].append(b - 1)
-        cost[a - 1].append(w)
-    s, t = data[0] - 1, data[1] - 1
-    print(distance(adj, cost, s, t))
+    t = input()
+    for i in range(int(t)):
+        n, m = input().split()
+        n = int(n)
+        m = int(m)
+        data = []
+        for _ in range(m + 1):
+            data.extend(list(map(int, input().split())))
+        edges = list(zip(zip(data[0:(3 * m):3], data[1:(3 * m):3]), data[2:(3 * m):3]))
+        data = data[3 * m:]
+        adj = [[] for _ in range(n)]
+        cost = [[] for _ in range(n)]
+        for ((a, b), w) in edges:
+            adj[a - 1].append(b - 1)
+            cost[a - 1].append(w)
+            adj[b-1].append(a-1)
+            cost[b-1].append(w)
+        s = data[0] - 1
+        if i == 1:
+            for a, b in zip(adj[59], cost[59]):
+                print(59, a, b)
+            for a, b in zip(adj[2], cost[2]):
+                print(2, a, b)
+        # print(*distance(adj, cost, s))
+        distance(adj, cost, s)
